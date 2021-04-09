@@ -9,8 +9,8 @@ import 'package:tutorial_coach_mark/src/util.dart';
 class AnimatedFocusLight extends StatefulWidget {
   final List<TargetFocus> targets;
   final Function(TargetFocus) focus;
-  final Function(TargetFocus) clickTarget;
-  final Function(TargetFocus) clickOverlay;
+  final Future<void> Function(TargetFocus) clickTarget;
+  final Future<void> Function(TargetFocus) clickOverlay;
   final Function removeFocus;
   final Function() finish;
   final double paddingFocus;
@@ -136,18 +136,18 @@ class AnimatedFocusLightState extends State<AnimatedFocusLight> with TickerProvi
   void next() => _tapHandler();
   void previous() => _tapHandler(goNext: false);
 
-  void _tapHandler({bool goNext = true, bool targetTap = false, bool overlayTap = false}) {
+  Future<void> _tapHandler({bool goNext = true, bool targetTap = false, bool overlayTap = false}) async {
     setState(() {
       _goNext = goNext;
       _initReverse = true;
     });
-    _controllerPulse.reverse(from: _controllerPulse.value);
     if (targetTap) {
-      widget?.clickTarget(_targetFocus);
+      await widget?.clickTarget(_targetFocus);
     }
     if (overlayTap) {
-      widget?.clickOverlay(_targetFocus);
+      await widget?.clickOverlay(_targetFocus);
     }
+    _controllerPulse.reverse(from: _controllerPulse.value);
   }
 
   void _nextFocus() {
