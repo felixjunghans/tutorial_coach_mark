@@ -25,8 +25,8 @@ class TutorialCoachMarkWidget extends StatefulWidget {
   }) : super(key: key);
 
   final List<TargetFocus> targets;
-  final Function(TargetFocus) clickTarget;
-  final Function(TargetFocus) clickOverlay;
+  final Future<void> Function(TargetFocus) clickTarget;
+  final Future<void> Function(TargetFocus) clickOverlay;
   final Function() finish;
   final Color colorShadow;
   final double opacityShadow;
