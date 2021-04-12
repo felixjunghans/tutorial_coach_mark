@@ -137,17 +137,19 @@ class AnimatedFocusLightState extends State<AnimatedFocusLight> with TickerProvi
   void previous() => _tapHandler(goNext: false);
 
   Future<void> _tapHandler({bool goNext = true, bool targetTap = false, bool overlayTap = false}) async {
-    setState(() {
-      _goNext = goNext;
-      _initReverse = true;
-    });
     if (targetTap) {
       await widget?.clickTarget(_targetFocus);
     }
     if (overlayTap) {
       await widget?.clickOverlay(_targetFocus);
     }
-    _controllerPulse.reverse(from: _controllerPulse.value);
+    await Future.delayed(const Duration(milliseconds: 300));
+
+     setState(() {
+       _goNext = goNext;
+       _initReverse = true;
+     });
+     _controllerPulse.reverse(from: _controllerPulse.value);
   }
 
   void _nextFocus() {
