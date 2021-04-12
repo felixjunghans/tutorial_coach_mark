@@ -63,12 +63,8 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> {
             opacityShadow: widget.opacityShadow,
             focusAnimationDuration: widget.focusAnimationDuration,
             pulseAnimationDuration: widget.pulseAnimationDuration,
-            clickTarget: (target) {
-              widget.clickTarget?.call(target);
-            },
-            clickOverlay: (target) {
-              widget.clickOverlay?.call(target);
-            },
+            clickTarget: widget.clickTarget,
+            clickOverlay: widget.clickOverlay,
             focus: (target) {
               setState(() {
                 currentTarget = target;
@@ -100,6 +96,10 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> {
     List<Widget> children = List();
 
     TargetPosition target = getTargetCurrent(currentTarget);
+
+    if (target == null) {
+      return SizedBox.shrink();
+    }
 
     var positioned = Offset(
       target.offset.dx + target.size.width / 2,
